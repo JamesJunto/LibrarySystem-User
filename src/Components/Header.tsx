@@ -1,8 +1,8 @@
 export const Header = () => {
   return (
-    <div className="navbar bg-[var(--bg-header)] shadow-sm">
+    <div className="navbar bg-(--bg-header) shadow-sm w-f">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl text-white">daisyUI</a>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
