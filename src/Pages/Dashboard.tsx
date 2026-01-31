@@ -1,4 +1,4 @@
-import { BookOpen, Clock, CheckCircle } from "lucide-react";
+import { BookOpen, Backpack , CheckCircle, BookDown } from "lucide-react";
 import type { IBooks } from "../interface/IBooks";
 
 type DashboardProps = {
@@ -17,29 +17,32 @@ type Card = {
 };
 
 export const Dashboard = ({ books, loading, error }: DashboardProps) => {
-  const cards: Card[] = [
-    {
-      title: "Books Borrowed",
-      value: 0,
-      icon: BookOpen,
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
-    },
-    {
-      title: "Books Available",
-      value: 120,
-      icon: CheckCircle,
-      color: "text-green-600",
-      bgColor: "bg-green-50",
-    },
-    {
-      title: "Late Returns",
-      value: 3,
-      icon: Clock,
-      color: "text-amber-600",
-      bgColor: "bg-amber-50",
-    },
-  ];
+  
+ const cardsValues: Card[] = [
+  {
+    title: "Total Available Books",
+    value: books.length,
+    icon: BookOpen,
+    color: "text-blue-600",
+    bgColor: "bg-blue-100/30",
+  },
+  {
+    title: "Total Borrowed Books",
+    value: 0,
+    icon: CheckCircle,
+    color: "text-green-600",
+    bgColor: "bg-green-100/30",
+  },
+  {
+    title: "Total Returned Books",
+    value: 0,
+    icon: BookDown,
+    color: "text-purple-600",
+    bgColor: "bg-purple-100/30",
+  },
+
+
+];
 
   const getGenreColor = (genre: string) => {
     const colors: { [key: string]: string } = {
@@ -102,9 +105,10 @@ export const Dashboard = ({ books, loading, error }: DashboardProps) => {
           </p>
         </div>
 
+
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {cards.map((card, index) => {
+          {cardsValues.map((card, index) => {
             const Icon = card.icon;
             return (
               <div
@@ -134,6 +138,8 @@ export const Dashboard = ({ books, loading, error }: DashboardProps) => {
           })}
         </div>
 
+
+
         {/* Books Table */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden w-screen max-w-7xl">
           {/* Table Header */}
@@ -150,7 +156,7 @@ export const Dashboard = ({ books, loading, error }: DashboardProps) => {
           <div className="overflow-x-auto">
             <div
               className={`overflow-y-auto ${
-                books.length > 5 ? "max-h-[350px]" : "" // adjust height to fit 5 rows approx
+                books.length > 5 ? "max-h-[350px]" : "" 
               }`}
             >
               <table className="w-full">

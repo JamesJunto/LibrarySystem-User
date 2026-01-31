@@ -39,7 +39,7 @@ export const SideNav = () => {
                 📚
               </div>
               <div>
-                <h1 className="text-xl font-bold tracking-tight">Library Admin</h1>
+                <h1 className="text-xl font-bold tracking-tight">Library User</h1>
                 <p className="text-xs text-gray-500 mt-0.5">Management Panel</p>
               </div>
             </div>

@@ -29,7 +29,7 @@ export const useGet = (url: string) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [url]);
 
   return { book, loading, error, fetchData };
 };
