@@ -2,11 +2,13 @@ import { Dashboard } from "./Pages/Dashboard";
 import { Header } from "./Components/Header";
 import { SideNav } from "./Components/Side_nav";
 import { useGetData } from "./data/data";
-
+import { LandingPage } from "./Pages/LandingPage";
+import { LoginForm } from "./Components/LoginForm";
 function App() {
-  const { book, loading, error, fetchData } = useGetData();
+ // const { book, loading, error, fetchData } = useGetData();
 
   return (
+    /*
     <div className="min-h-screen flex flex-col">
       <Header />
 
@@ -23,6 +25,8 @@ function App() {
         </div>
       </div>
     </div>
+    */    
+    <LoginForm />
   );
 }
 
