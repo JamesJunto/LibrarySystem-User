@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 import type { ILogin } from "../interface/ILogin";
 
 export const LoginForm = () => {
   const { Login } = useLogin();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState<ILogin>({
     username: "",
@@ -20,7 +22,11 @@ export const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await Login(form)
+    const result = await Login(form);
+
+    if (result.success) {
+      navigate("/Dashboard");
+    }
   };
 
   return (

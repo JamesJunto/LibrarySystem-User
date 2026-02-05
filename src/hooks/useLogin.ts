@@ -18,8 +18,8 @@ export const useLogin = () => {
       }
 
       const result = await response.json();
-        console.log("Login response:", result);
 
+      return result;
 
     } catch (err) {
         console.error("Error submitting form:", err);
@@ -28,5 +28,5 @@ export const useLogin = () => {
 
   };
   
-  return { Login };
+  return { Login};
 };
