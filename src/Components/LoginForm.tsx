@@ -22,6 +22,11 @@ export const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const {username, password} = form;
+
+    if(!username.trim() || !password.trim()) {
+      return alert("Please fill in both fields.");
+    }
     const result = await Login(form);
 
     if (result.success) {
