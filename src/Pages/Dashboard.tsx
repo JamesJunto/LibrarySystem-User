@@ -1,4 +1,4 @@
-import { BookOpen, Backpack , CheckCircle, BookDown } from "lucide-react";
+import { BookOpen, CheckCircle, BookDown } from "lucide-react";
 import type { IBooks } from "../interface/IBooks";
 
 type DashboardProps = {
