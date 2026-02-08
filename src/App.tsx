@@ -3,10 +3,12 @@ import Layout from "./Components/Layout";
 import { LoginForm } from "./Components/LoginForm";
 import { Dashboard } from "./Pages/Dashboard";
 import { useGetData } from "./data/data";
-import BorrowedBoooks from "./Pages/BorrowedBooks";
+import BorrowedBooksPage from "./Pages/BorrowedBooksPage";
+import { useBorrowedBooks } from "./hooks/useBorrowedBook";
 
 function App() {
   const { book, loading, error, fetchData } = useGetData();
+  const { borrowedBooks,setBorrowedBooks } = useBorrowedBooks();
 
   return (
     <BrowserRouter>
@@ -31,10 +33,23 @@ function App() {
                 books={book}
                 loading={loading}
                 error={error}
+                borrowedBooks={borrowedBooks}
+                setBorrowedBooks={setBorrowedBooks}
               />
             }
           />
         </Route>
+
+          <Route element={<Layout />}>
+          <Route
+            path="/borrowed-books"
+            element={
+              <BorrowedBooksPage borrowedBooks={borrowedBooks} />
+            }
+          />
+        </Route>    
+
+
       </Routes>
     </BrowserRouter>
   );

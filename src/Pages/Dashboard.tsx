@@ -1,8 +1,11 @@
 import { BookOpen, CheckCircle, BookDown } from "lucide-react";
 import type { IBooks } from "../interface/IBooks";
+import BorrowedBooksPage from "./BorrowedBooksPage";
 
 type DashboardProps = {
   books: IBooks[];
+  borrowedBooks: IBooks[];
+  setBorrowedBooks: React.Dispatch<React.SetStateAction<IBooks[]>>;
   loading: boolean;
   error: string | null;
   fetchData: () => void;
@@ -16,33 +19,36 @@ type Card = {
   bgColor: string;
 };
 
-export const Dashboard = ({ books, loading, error }: DashboardProps) => {
-  
- const cardsValues: Card[] = [
-  {
-    title: "Total Available Books",
-    value: books.length,
-    icon: BookOpen,
-    color: "text-blue-600",
-    bgColor: "bg-blue-100/30",
-  },
-  {
-    title: "Total Borrowed Books",
-    value: 0,
-    icon: CheckCircle,
-    color: "text-green-600",
-    bgColor: "bg-green-100/30",
-  },
-  {
-    title: "Total Returned Books",
-    value: 0,
-    icon: BookDown,
-    color: "text-purple-600",
-    bgColor: "bg-purple-100/30",
-  },
-
-
-];
+export const Dashboard = ({
+  books,
+  loading,
+  error,
+  borrowedBooks,
+  setBorrowedBooks,
+}: DashboardProps) => {
+  const cardsValues: Card[] = [
+    {
+      title: "Total Available Books",
+      value: books.length,
+      icon: BookOpen,
+      color: "text-blue-600",
+      bgColor: "bg-blue-100/30",
+    },
+    {
+      title: "Total Borrowed Books",
+      value: 0,
+      icon: CheckCircle,
+      color: "text-green-600",
+      bgColor: "bg-green-100/30",
+    },
+    {
+      title: "Total Returned Books",
+      value: 0,
+      icon: BookDown,
+      color: "text-purple-600",
+      bgColor: "bg-purple-100/30",
+    },
+  ];
 
   const getGenreColor = (genre: string) => {
     const colors: { [key: string]: string } = {
@@ -54,6 +60,19 @@ export const Dashboard = ({ books, loading, error }: DashboardProps) => {
     };
     return colors[genre] || "bg-gray-100 text-gray-800 border-gray-200";
   };
+
+  const borrowBook = (bookId: number) => {
+    const bookToBorrow = books.find((book) => book.id === bookId);
+
+    if (!bookToBorrow) {
+      alert("Book not found!");
+      return;
+    }
+
+    setBorrowedBooks((prev) => [...prev, bookToBorrow]);
+  };
+
+  <BorrowedBooksPage borrowedBooks={borrowedBooks} />;
 
   if (loading) {
     return (
@@ -105,7 +124,6 @@ export const Dashboard = ({ books, loading, error }: DashboardProps) => {
           </p>
         </div>
 
-
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {cardsValues.map((card, index) => {
@@ -138,8 +156,6 @@ export const Dashboard = ({ books, loading, error }: DashboardProps) => {
           })}
         </div>
 
-
-
         {/* Books Table */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden w-screen max-w-7xl">
           {/* Table Header */}
@@ -156,7 +172,7 @@ export const Dashboard = ({ books, loading, error }: DashboardProps) => {
           <div className="overflow-x-auto">
             <div
               className={`overflow-y-auto ${
-                books.length > 5 ? "max-h-[350px]" : "" 
+                books.length > 5 ? "max-h-[350px]" : ""
               }`}
             >
               <table className="w-full">
@@ -214,6 +230,14 @@ export const Dashboard = ({ books, loading, error }: DashboardProps) => {
                           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">
                             Available
                           </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <button
+                            onClick={() => borrowBook(book.id)}
+                            className="text-sm text-blue-600 hover:underline hover:cursor-pointer"
+                          >
+                            Borrow
+                          </button>
                         </td>
                       </tr>
                     ))

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export const SideNav = () => {
   return (
     <div className="drawer lg:drawer-open w-50">
@@ -5,22 +6,22 @@ export const SideNav = () => {
 
       {/* EMPTY CONTENT (required by drawer) */}
       <div className="drawer-content lg:hidden">
-        <label 
-          htmlFor="my-drawer-3" 
+        <label
+          htmlFor="my-drawer-3"
           className="btn btn-primary drawer-button m-4 shadow-lg"
         >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            strokeWidth={2} 
-            stroke="currentColor" 
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
             className="w-5 h-5"
           >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" 
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
             />
           </svg>
           Open Menu
@@ -39,7 +40,9 @@ export const SideNav = () => {
                 📚
               </div>
               <div>
-                <h1 className="text-xl font-bold tracking-tight">Library User</h1>
+                <h1 className="text-xl font-bold tracking-tight">
+                  Library User
+                </h1>
                 <p className="text-xs text-gray-500 mt-0.5">Management Panel</p>
               </div>
             </div>
@@ -48,10 +51,10 @@ export const SideNav = () => {
           {/* MENU */}
           <ul className="menu p-4 gap-1.5">
             <li>
-              <a className="active text-base font-medium rounded-lg py-3 transition-all duration-200 hover:scale-[1.02]">
+              <Link to="/dashboard" className="flex items-center gap-3 text-base rounded-lg py-3 transition-all duration-200 hover:scale-[1.02] hover:shadow-md">
                 <span className="text-xl">📊</span>
                 <span>Dashboard</span>
-              </a>
+              </Link>
             </li>
 
             {/* Books Section */}
@@ -69,10 +72,13 @@ export const SideNav = () => {
             </li>
 
             <li>
-              <a className="text-base rounded-lg py-3 transition-all duration-200 hover:scale-[1.02] hover:shadow-md">
+              <Link
+                to="/borrowed-books"
+                className="flex items-center gap-3 text-base rounded-lg py-3 transition-all duration-200 hover:scale-[1.02] hover:shadow-md"
+              >
                 <span className="text-xl">📖</span>
-                <span>Borrowed Books</span>
-              </a>
+                Borrowed Books
+              </Link>
             </li>
 
             <li>
