@@ -69,6 +69,12 @@ export const Dashboard = ({
       return;
     }
 
+    const isAlreadyBorrowed = borrowedBooks.some((book) => book.id === bookId);
+    if (isAlreadyBorrowed) {
+      alert("You have already borrowed this book!");
+      return;
+    }
+
     setBorrowedBooks((prev) => [...prev, bookToBorrow]);
   };
 
