@@ -8,7 +8,7 @@ export const useLogin = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },
+        },    
         credentials: "include", 
         body: JSON.stringify(data),
       });
@@ -18,8 +18,8 @@ export const useLogin = () => {
       }
 
       const result = await response.json();
-
-      return result;
+      console.log("Login response:", result.name);
+      return result;  
 
     } catch (err) {
         console.error("Error submitting form:", err);

@@ -14,7 +14,7 @@ const BorrowedBooksPage = ({ borrowedBooks }: { borrowedBooks: IBooks[] }) => {
     <div className="flex flex-col gap-4 p-4 ml-8">
       {borrowedBooks.map((book) => (
         <div
-          key={book?.id}
+          key={book?.book_id}
           className="card bg-primary text-primary-content w-96"
         >
           <div className="card-body">

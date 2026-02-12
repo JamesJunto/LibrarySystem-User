@@ -5,10 +5,12 @@ import { Dashboard } from "./Pages/Dashboard";
 import { useGetData } from "./data/data";
 import BorrowedBooksPage from "./Pages/BorrowedBooksPage";
 import { useBorrowedBooks } from "./hooks/useBorrowedBook";
+import { useBorrowedBooksData } from "./data/getBorrowedBooksData";
 
 function App() {
   const { book, loading, error, fetchData } = useGetData();
-  const { borrowedBooks,setBorrowedBooks } = useBorrowedBooks();
+  //const { borrowedBooks,setBorrowedBooks } = useBorrowedBooks();
+  const {book: borrowedBooksData } = useBorrowedBooksData();
 
   return (
     <BrowserRouter>
@@ -33,8 +35,8 @@ function App() {
                 books={book}
                 loading={loading}
                 error={error}
-                borrowedBooks={borrowedBooks}
-                setBorrowedBooks={setBorrowedBooks}
+                //borrowedBooks={borrowedBooks}
+                //setBorrowedBooks={setBorrowedBooks}
               />
             }
           />
@@ -44,7 +46,7 @@ function App() {
           <Route
             path="/borrowed-books"
             element={
-              <BorrowedBooksPage borrowedBooks={borrowedBooks} />
+              <BorrowedBooksPage borrowedBooks={borrowedBooksData} />
             }
           />
         </Route>    

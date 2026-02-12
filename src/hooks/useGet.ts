@@ -12,6 +12,7 @@ export const useGet = (url: string) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", 
       });
 
       if (!response.ok) {
@@ -20,6 +21,8 @@ export const useGet = (url: string) => {
 
       const result = await response.json();
       setBook(result);
+
+      console.log("Fetched data:", result);
     } catch (err: unknown) {
       setError((err as Error).message);
     } finally {

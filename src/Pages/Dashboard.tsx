@@ -1,11 +1,10 @@
 import { BookOpen, CheckCircle, BookDown } from "lucide-react";
 import type { IBooks } from "../interface/IBooks";
-import BorrowedBooksPage from "./BorrowedBooksPage";
 
 type DashboardProps = {
   books: IBooks[];
-  borrowedBooks: IBooks[];
-  setBorrowedBooks: React.Dispatch<React.SetStateAction<IBooks[]>>;
+ // borrowedBooks: IBooks[];
+  //setBorrowedBooks: React.Dispatch<React.SetStateAction<IBooks[]>>;
   loading: boolean;
   error: string | null;
   fetchData: () => void;
@@ -23,8 +22,8 @@ export const Dashboard = ({
   books,
   loading,
   error,
-  borrowedBooks,
-  setBorrowedBooks,
+  //borrowedBooks,
+  //setBorrowedBooks,
 }: DashboardProps) => {
   const cardsValues: Card[] = [
     {
@@ -36,7 +35,7 @@ export const Dashboard = ({
     },
     {
       title: "Total Borrowed Books",
-      value: 0,
+      value: 0, //borrowedBooks.length --- IGNORE ---
       icon: CheckCircle,
       color: "text-green-600",
       bgColor: "bg-green-100/30",
@@ -60,7 +59,7 @@ export const Dashboard = ({
     };
     return colors[genre] || "bg-gray-100 text-gray-800 border-gray-200";
   };
-
+/*
   const borrowBook = (bookId: number) => {
     const bookToBorrow = books.find((book) => book.id === bookId);
 
@@ -79,6 +78,7 @@ export const Dashboard = ({
   };
 
   <BorrowedBooksPage borrowedBooks={borrowedBooks} />;
+  */
 
   if (loading) {
     return (
