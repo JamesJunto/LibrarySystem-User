@@ -1,10 +1,9 @@
 import { BookOpen, CheckCircle, BookDown } from "lucide-react";
 import type { IBooks } from "../interface/IBooks";
+import { useSendData } from "../hooks/useSendData";
 
 type DashboardProps = {
   books: IBooks[];
- // borrowedBooks: IBooks[];
-  //setBorrowedBooks: React.Dispatch<React.SetStateAction<IBooks[]>>;
   loading: boolean;
   error: string | null;
   fetchData: () => void;
@@ -49,6 +48,8 @@ export const Dashboard = ({
     },
   ];
 
+  const { sendData } = useSendData();
+
   const getGenreColor = (genre: string) => {
     const colors: { [key: string]: string } = {
       Classic: "bg-amber-100 text-amber-800 border-amber-200",
@@ -59,26 +60,19 @@ export const Dashboard = ({
     };
     return colors[genre] || "bg-gray-100 text-gray-800 border-gray-200";
   };
-/*
-  const borrowBook = (bookId: number) => {
-    const bookToBorrow = books.find((book) => book.id === bookId);
 
-    if (!bookToBorrow) {
-      alert("Book not found!");
-      return;
-    }
+ const borrowBook = async (bookId: number) => {
+  const bookExists = books.some((book) => book.book_id === bookId);
 
-    const isAlreadyBorrowed = borrowedBooks.some((book) => book.id === bookId);
-    if (isAlreadyBorrowed) {
-      alert("You have already borrowed this book!");
-      return;
-    }
+  if (!bookExists) {
+    alert("Book not found!");
+    return;
+  }
 
-    setBorrowedBooks((prev) => [...prev, bookToBorrow]);
-  };
+  console.log("Attempting to borrow book with ID:", bookId);
+  await sendData("http://localhost:8080/addBorrowBook.php", { book_id: bookId });
+};
 
-  <BorrowedBooksPage borrowedBooks={borrowedBooks} />;
-  */
 
   if (loading) {
     return (
@@ -208,11 +202,11 @@ export const Dashboard = ({
                   {books.length > 0 ? (
                     books.map((book) => (
                       <tr
-                        key={book.id}
+                        key={book.book_id}
                         className="hover:bg-blue-50/50 transition-colors duration-150"
                       >
                         <td className="px-6 py-4 text-sm text-slate-600">
-                          {book.id}
+                          {book.book_id}
                         </td>
                         <td className="px-6 py-4 text-sm font-medium text-slate-800">
                           {book.title}
@@ -239,7 +233,7 @@ export const Dashboard = ({
                         </td>
                         <td className="px-6 py-4">
                           <button
-                            onClick={() => borrowBook(book.id)}
+                            onClick={() => borrowBook(book.book_id)}
                             className="text-sm text-blue-600 hover:underline hover:cursor-pointer"
                           >
                             Borrow
