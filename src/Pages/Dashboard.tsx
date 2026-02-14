@@ -4,6 +4,7 @@ import { useSendData } from "../hooks/useSendData";
 
 type DashboardProps = {
   books: IBooks[];
+  borrowedBooks: IBooks[];
   loading: boolean;
   error: string | null;
   fetchData: () => void;
@@ -21,7 +22,7 @@ export const Dashboard = ({
   books,
   loading,
   error,
-  //borrowedBooks,
+  borrowedBooks,
   //setBorrowedBooks,
 }: DashboardProps) => {
   const cardsValues: Card[] = [
@@ -34,7 +35,7 @@ export const Dashboard = ({
     },
     {
       title: "Total Borrowed Books",
-      value: 0, //borrowedBooks.length --- IGNORE ---
+      value:  borrowedBooks.length,
       icon: CheckCircle,
       color: "text-green-600",
       bgColor: "bg-green-100/30",
@@ -50,6 +51,7 @@ export const Dashboard = ({
 
   const { sendData } = useSendData();
 
+ 
   const getGenreColor = (genre: string) => {
     const colors: { [key: string]: string } = {
       Classic: "bg-amber-100 text-amber-800 border-amber-200",
@@ -61,6 +63,8 @@ export const Dashboard = ({
     return colors[genre] || "bg-gray-100 text-gray-800 border-gray-200";
   };
 
+
+
  const borrowBook = async (bookId: number) => {
   const bookExists = books.some((book) => book.book_id === bookId);
 
@@ -68,9 +72,10 @@ export const Dashboard = ({
     alert("Book not found!");
     return;
   }
+  
 
-  console.log("Attempting to borrow book with ID:", bookId);
   await sendData("http://localhost:8080/addBorrowBook.php", { book_id: bookId });
+
 };
 
 

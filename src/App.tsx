@@ -34,7 +34,7 @@ function App() {
                 books={book}
                 loading={loading}
                 error={error}
-                //borrowedBooks={borrowedBooks}
+                borrowedBooks={borrowedBooksData}
                 //setBorrowedBooks={setBorrowedBooks}
               />
             }
@@ -45,7 +45,7 @@ function App() {
           <Route
             path="/borrowed-books"
             element={
-              <BorrowedBooksPage borrowedBooks={borrowedBooksData} />
+              <BorrowedBooksPage borrowedBooks={borrowedBooksData} loading={loading}/>
             }
           />
         </Route>    
