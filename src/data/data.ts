@@ -1,5 +1,5 @@
-import { useGet } from "../hooks/useGet"
+import { useGetAllBooks } from "../hooks/useGetAllBooks"
 
 export const useGetData = () => {
-    return useGet("http://localhost:8080/getBook.php");
+    return useGetAllBooks("http://localhost:8080/getBook.php");
 }

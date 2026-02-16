@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-
-export const useGet = (url: string) => {
+import { useState, useEffect } from "react";
+import { useCheckSession } from "./useCheckSession";
+export const useGetAllBooks = (url: string) => {
   const [book, setBook] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { ready } = useCheckSession();
 
   const fetchData = async () => {
     try {
@@ -12,7 +14,7 @@ export const useGet = (url: string) => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", 
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -31,8 +33,10 @@ export const useGet = (url: string) => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [url]);
+    if (ready) {
+      fetchData();
+    }
+  }, [ready]);
 
   return { book, loading, error, fetchData };
 };

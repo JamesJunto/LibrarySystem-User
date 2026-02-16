@@ -2,12 +2,12 @@ import { BookOpen, CheckCircle, BookDown } from "lucide-react";
 import type { IBooks } from "../interface/IBooks";
 import { useSendData } from "../hooks/useSendData";
 
+
 type DashboardProps = {
   books: IBooks[];
   borrowedBooks: IBooks[];
   loading: boolean;
   error: string | null;
-  fetchData: () => void;
 };
 
 type Card = {
@@ -23,7 +23,6 @@ export const Dashboard = ({
   loading,
   error,
   borrowedBooks,
-  //setBorrowedBooks,
 }: DashboardProps) => {
   const cardsValues: Card[] = [
     {
@@ -49,9 +48,10 @@ export const Dashboard = ({
     },
   ];
 
+
   const { sendData } = useSendData();
 
- 
+
   const getGenreColor = (genre: string) => {
     const colors: { [key: string]: string } = {
       Classic: "bg-amber-100 text-amber-800 border-amber-200",
@@ -72,7 +72,6 @@ export const Dashboard = ({
     alert("Book not found!");
     return;
   }
-  
 
   await sendData("http://localhost:8080/addBorrowBook.php", { book_id: bookId });
 

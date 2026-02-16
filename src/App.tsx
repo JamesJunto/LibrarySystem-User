@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Layout from "./Components/Layout";
 import { LoginForm } from "./Components/LoginForm";
 import { Dashboard } from "./Pages/Dashboard";
@@ -7,19 +7,17 @@ import BorrowedBooksPage from "./Pages/BorrowedBooksPage";
 import { useBorrowedBooksData } from "./data/getBorrowedBooksData";
 
 function App() {
-  const { book, loading, error, fetchData } = useGetData();
-  //const { borrowedBooks,setBorrowedBooks } = useBorrowedBooks();
-  const {book: borrowedBooksData } = useBorrowedBooksData();
+  const { book, loading, error } = useGetData();
+  const { borrowedBooks, loading: borrowedBooksLoading } = useBorrowedBooksData();
 
   return (
-    <BrowserRouter>
-      <Routes>
+      <Routes>,
         {/* LOGIN PAGE (NO LAYOUT) */}
         <Route
           path="/"
           element={
             <div className="flex justify-center items-center min-h-screen bg-base-200">
-              <LoginForm />
+              <LoginForm  />
             </div>
           }
         />
@@ -30,12 +28,10 @@ function App() {
             path="/dashboard"
             element={
               <Dashboard
-                fetchData={fetchData}
                 books={book}
                 loading={loading}
                 error={error}
-                borrowedBooks={borrowedBooksData}
-                //setBorrowedBooks={setBorrowedBooks}
+                borrowedBooks={borrowedBooks}
               />
             }
           />
@@ -45,14 +41,12 @@ function App() {
           <Route
             path="/borrowed-books"
             element={
-              <BorrowedBooksPage borrowedBooks={borrowedBooksData} loading={loading}/>
+              <BorrowedBooksPage borrowedBooks={borrowedBooks} loading={borrowedBooksLoading} />
             }
           />
         </Route>    
 
-
       </Routes>
-    </BrowserRouter>
   );
 }
 
