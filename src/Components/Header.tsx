@@ -1,4 +1,22 @@
 export const Header = () => {
+
+  const Logout = async () => {
+    try{
+      const response = await fetch("http://localhost:8080/Logout.php", {
+        method: "POST",
+        credentials: "include",
+      })
+
+      const result = await response.json();
+
+      if(result.success){
+        window.location.href = "/";
+      }
+    }catch(err){
+        console.log(err)
+    }
+  }
+
   return (
     <div className="navbar bg-(--bg-header) shadow-sm w-f">
       <div className="flex-1">
@@ -66,7 +84,7 @@ export const Header = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <a onClick={Logout}>Logout</a>
             </li>
           </ul>
         </div>

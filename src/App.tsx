@@ -17,7 +17,7 @@ function App() {
           path="/"
           element={
             <div className="flex justify-center items-center min-h-screen bg-base-200">
-              <LoginForm  />
+              <LoginForm />
             </div>
           }
         />
