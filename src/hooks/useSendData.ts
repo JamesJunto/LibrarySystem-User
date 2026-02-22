@@ -11,13 +11,13 @@ export const useSendData = () => {
         body: JSON.stringify(data),
       });
 
-      console.log(data);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
+      console.log(result);
 
       return result;
     } catch (err: unknown) {

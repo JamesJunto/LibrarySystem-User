@@ -8,7 +8,7 @@ import { useBorrowedBooksData } from "./data/getBorrowedBooksData";
 
 function App() {
   const { book, loading, error } = useGetData();
-  const { borrowedBooks, loading: borrowedBooksLoading } = useBorrowedBooksData();
+  const { borrowedBooks, loading: borrowedBooksLoading, fetchData, setBorrowedBooks } = useBorrowedBooksData();
 
   return (
       <Routes>,
@@ -32,6 +32,8 @@ function App() {
                 loading={loading}
                 error={error}
                 borrowedBooks={borrowedBooks}
+                fetchData={fetchData}
+                setBorrowedBooks={setBorrowedBooks}
               />
             }
           />

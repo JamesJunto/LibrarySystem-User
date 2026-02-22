@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useCheckSession } from "./useCheckSession";
+import type { IBooks } from "../interface/IBooks";
 
 export const useGetAllBorrowedBooks = (url: string) => {
-  const [borrowedBooks, setBorrowedBooks] = useState<[]>([]);
+  const [borrowedBooks, setBorrowedBooks] = useState<IBooks[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,9 +25,8 @@ export const useGetAllBorrowedBooks = (url: string) => {
       }
 
       const result = await response.json();
-      setBorrowedBooks(result);
+      setBorrowedBooks(result)
 
-      console.log("Fetched data:", result);
     } catch (err: unknown) {
       setError((err as Error).message);
     } finally {
@@ -42,5 +42,5 @@ export const useGetAllBorrowedBooks = (url: string) => {
 }, [ready]);
 
 
-  return { borrowedBooks, loading, error, fetchData};
+  return { setBorrowedBooks, borrowedBooks, loading, error, fetchData};
 };

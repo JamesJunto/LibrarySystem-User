@@ -2,12 +2,13 @@ import { BookOpen, CheckCircle, BookDown } from "lucide-react";
 import type { IBooks } from "../interface/IBooks";
 import { useSendData } from "../hooks/useSendData";
 
-
 type DashboardProps = {
   books: IBooks[];
   borrowedBooks: IBooks[];
   loading: boolean;
   error: string | null;
+  setBorrowedBooks: React.Dispatch<React.SetStateAction<any>>
+  fetchData: () => void;
 };
 
 type Card = {
@@ -23,6 +24,8 @@ export const Dashboard = ({
   loading,
   error,
   borrowedBooks,
+  fetchData,
+  setBorrowedBooks,
 }: DashboardProps) => {
   const cardsValues: Card[] = [
     {
@@ -34,7 +37,7 @@ export const Dashboard = ({
     },
     {
       title: "Total Borrowed Books",
-      value:  borrowedBooks.length,
+      value: borrowedBooks.length,
       icon: CheckCircle,
       color: "text-green-600",
       bgColor: "bg-green-100/30",
@@ -48,9 +51,7 @@ export const Dashboard = ({
     },
   ];
 
-
   const { sendData } = useSendData();
-
 
   const getGenreColor = (genre: string) => {
     const colors: { [key: string]: string } = {
@@ -63,20 +64,26 @@ export const Dashboard = ({
     return colors[genre] || "bg-gray-100 text-gray-800 border-gray-200";
   };
 
+const borrowBook = async (bookId: number) => {
+  try {
+    if (borrowedBooks.some(book => book.book_id === bookId)) {
+      alert("Book already borrowed");
+      return;
+    }
 
+    const res = await sendData(
+      "http://localhost:8080/addBorrowBook.php",
+      { book_id: bookId }
+    );
 
- const borrowBook = async (bookId: number) => {
-  const bookExists = books.some((book) => book.book_id === bookId);
+    if (res?.status) {
+      await fetchData(); 
+    }
 
-  if (!bookExists) {
-    alert("Book not found!");
-    return;
+  } catch (err) {
+    console.error("Error borrowing book:", err);
   }
-
-  await sendData("http://localhost:8080/addBorrowBook.php", { book_id: bookId });
-
 };
-
 
   if (loading) {
     return (
@@ -157,7 +164,7 @@ export const Dashboard = ({
                 ></div>
               </div>
             );
-          })}
+          })} 
         </div>
 
         {/* Books Table */}
@@ -231,8 +238,15 @@ export const Dashboard = ({
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">
-                            Available
+                          <span
+                            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border
+                            ${
+                              book.status
+                                ?"bg-red-100 text-red-800 border-red-200"
+                                :"bg-green-100 text-green-800 border-green-200"
+                            }`}
+                          >
+                            {book.status ? "Borrowed" : "Available"}
                           </span>
                         </td>
                         <td className="px-6 py-4">

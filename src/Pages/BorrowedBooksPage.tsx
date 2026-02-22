@@ -2,6 +2,12 @@ import type { IBooks } from "../interface/IBooks";
 
 const BorrowedBooksPage = ({ borrowedBooks, loading }: { borrowedBooks: IBooks[]; loading: boolean }) => {
 
+  const returnBooks = (bookId:number) =>{
+    const selectedBook = borrowedBooks.find(book => bookId === book.book_id)
+    console.log(selectedBook)
+  }
+  
+
   if (loading) {
     return (
       <div className="h-screen w-screen flex justify-center items-center bg-gradient-to-br from-slate-50 to-slate-100">
@@ -69,7 +75,7 @@ const BorrowedBooksPage = ({ borrowedBooks, loading }: { borrowedBooks: IBooks[]
                 </div>
 
                 <div className="pt-4 border-t border-gray-100">
-                  <button className="w-full px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                  <button onClick={()=> returnBooks(book.book_id)} className="w-full px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                     Return Book
                   </button>
                 </div>
