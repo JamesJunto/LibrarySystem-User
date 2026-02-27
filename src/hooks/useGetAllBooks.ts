@@ -7,7 +7,7 @@ export const useGetAllBooks = (url: string) => {
 
   const { ready } = useCheckSession();
 
-  const fetchData = async () => {
+  const fetchAllBooksData = async () => {
     try {
       const response = await fetch(url, {
         method: "GET",
@@ -34,9 +34,9 @@ export const useGetAllBooks = (url: string) => {
 
   useEffect(() => {
     if (ready) {
-      fetchData();
+      fetchAllBooksData();
     }
   }, [ready]);
 
-  return { book, loading, error, fetchData };
+  return { book, loading, error, fetchAllBooksData };
 };

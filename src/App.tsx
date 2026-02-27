@@ -7,7 +7,7 @@ import BorrowedBooksPage from "./Pages/BorrowedBooksPage";
 import { useBorrowedBooksData } from "./data/getBorrowedBooksData";
 
 function App() {
-  const { book, loading, error } = useGetData();
+  const { book, loading, error, fetchAllBooksData } = useGetData();
   const { borrowedBooks, loading: borrowedBooksLoading, fetchData, setBorrowedBooks } = useBorrowedBooksData();
 
   return (
@@ -30,6 +30,7 @@ function App() {
               <Dashboard
                 books={book}
                 loading={loading}
+                fetchAllbooks={fetchAllBooksData}
                 error={error}
                 borrowedBooks={borrowedBooks}
                 fetchData={fetchData}

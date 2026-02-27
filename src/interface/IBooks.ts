@@ -4,5 +4,5 @@ export interface IBooks {
   author: string;
   year: string;
   genre: string;
-  status: boolean;
+  status: number;
 }

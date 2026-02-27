@@ -7,8 +7,9 @@ type DashboardProps = {
   borrowedBooks: IBooks[];
   loading: boolean;
   error: string | null;
-  setBorrowedBooks: React.Dispatch<React.SetStateAction<any>>
+  setBorrowedBooks: React.Dispatch<React.SetStateAction<any>>;
   fetchData: () => void;
+  fetchAllbooks: () => void;
 };
 
 type Card = {
@@ -25,7 +26,7 @@ export const Dashboard = ({
   error,
   borrowedBooks,
   fetchData,
-  setBorrowedBooks,
+  fetchAllbooks,
 }: DashboardProps) => {
   const cardsValues: Card[] = [
     {
@@ -64,26 +65,25 @@ export const Dashboard = ({
     return colors[genre] || "bg-gray-100 text-gray-800 border-gray-200";
   };
 
-const borrowBook = async (bookId: number) => {
-  try {
-    if (borrowedBooks.some(book => book.book_id === bookId)) {
-      alert("Book already borrowed");
-      return;
+  const borrowBook = async (bookId: number) => {
+    try {
+      if (borrowedBooks.some((book) => book.book_id === bookId)) {
+        console.log("already borrow");
+        return;
+      }
+
+      const res = await sendData("http://localhost:8080/addBorrowBook.php", {
+        book_id: bookId,
+      });
+
+      if (res?.status) {
+        await fetchData();
+        await fetchAllbooks();
+      }
+    } catch (err) {
+      console.error("Error borrowing book:", err);
     }
-
-    const res = await sendData(
-      "http://localhost:8080/addBorrowBook.php",
-      { book_id: bookId }
-    );
-
-    if (res?.status) {
-      await fetchData(); 
-    }
-
-  } catch (err) {
-    console.error("Error borrowing book:", err);
-  }
-};
+  };
 
   if (loading) {
     return (
@@ -164,7 +164,7 @@ const borrowBook = async (bookId: number) => {
                 ></div>
               </div>
             );
-          })} 
+          })}
         </div>
 
         {/* Books Table */}
@@ -241,12 +241,13 @@ const borrowBook = async (bookId: number) => {
                           <span
                             className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border
                             ${
-                              book.status
+                              book.status == 1
                                 ?"bg-red-100 text-red-800 border-red-200"
                                 :"bg-green-100 text-green-800 border-green-200"
+                                
                             }`}
                           >
-                            {book.status ? "Borrowed" : "Available"}
+                            {book.status == 1 ? "Borrowed" : "Available"}
                           </span>
                         </td>
                         <td className="px-6 py-4">
