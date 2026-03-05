@@ -1,10 +1,31 @@
 import type { IBooks } from "../interface/IBooks";
+import { useSendData } from "../hooks/useSendData";
 
 const BorrowedBooksPage = ({ borrowedBooks, loading }: { borrowedBooks: IBooks[]; loading: boolean }) => {
 
-  const returnBooks = (bookId:number) =>{
-    const selectedBook = borrowedBooks.find(book => bookId === book.book_id)
-    console.log(selectedBook)
+  const { sendData } = useSendData();
+
+  const returnBooks = async (bookId:number) =>{
+    try {
+
+    const selectedBook = borrowedBooks.find(book => book.book_id === bookId)
+
+    if (!selectedBook) {
+      console.error("Book not found in borrowed books.");
+      return; 
+    }
+
+    const res = await sendData("http://localhost:8080/returnBooks.php", { book_id: bookId });
+
+    if (res.status) {
+      console.log("Book returned successfully:", res);
+    } else {
+      console.error("Failed to return the book.");
+    }
+
+    }catch(err:unknown){
+      console.error("Error returning book:", (err as Error).message);
+    }
   }
   
 

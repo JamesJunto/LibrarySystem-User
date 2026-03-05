@@ -1,4 +1,3 @@
-
 export const useSendData = () => {
   const sendData = async (url: string, data: { book_id: number }) => {
     try {
@@ -11,13 +10,11 @@ export const useSendData = () => {
         body: JSON.stringify(data),
       });
 
-
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
-      console.log(result);
 
       return result;
     } catch (err: unknown) {
